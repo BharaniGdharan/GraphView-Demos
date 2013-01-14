@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 
 import com.jjoe64.graphview.BarGraphView;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
@@ -33,6 +32,9 @@ public class RealtimeGraph extends Activity {
 		setContentView(R.layout.graphs);
 
 		// init example series data
+		exampleSeries1 = new GraphViewSeries(new float[] { 1f,2f,3f,4f,5f } ,
+				new float[] { 3.1f,1.2f,1.3f,1.4f,2.5f } );
+		/*
 		exampleSeries1 = new GraphViewSeries(new GraphViewData[] {
 				new GraphViewData(1, 2.0d)
 				, new GraphViewData(2, 1.5d)
@@ -41,7 +43,7 @@ public class RealtimeGraph extends Activity {
 				, new GraphViewData(4, 1.0d)
 				, new GraphViewData(5, 3.0d)
 		});
-
+*/
 		// graph with dynamically genereated horizontal and vertical labels
 		if (getIntent().getStringExtra("type").equals("bar")) {
 			graphView = new BarGraphView(
@@ -60,6 +62,9 @@ public class RealtimeGraph extends Activity {
 		layout.addView(graphView);
 
 		// ----------
+		exampleSeries2 = new GraphViewSeries(new float[] { 1f,2f,3f,4f,5f } ,
+				new float[] { 3.1f,2.2f,2.3f,1.4f,3.5f } );
+/*
 		exampleSeries2 = new GraphViewSeries(new GraphViewData[] {
 				new GraphViewData(1, 2.0d)
 				, new GraphViewData(2, 1.5d)
@@ -68,7 +73,7 @@ public class RealtimeGraph extends Activity {
 				, new GraphViewData(4, 1.0d)
 				, new GraphViewData(5, 3.0d)
 		});
-
+*/
 		// graph with custom labels and drawBackground
 		if (getIntent().getStringExtra("type").equals("bar")) {
 			graphView = new BarGraphView(
@@ -83,7 +88,7 @@ public class RealtimeGraph extends Activity {
 			((LineGraphView) graphView).setDrawBackground(true);
 		}
 		graphView.addSeries(exampleSeries2); // data
-		graphView.setViewPort(1, 4);
+		graphView.setViewPort(1, 100);
 		graphView.setScalable(true);
 
 		layout = (LinearLayout) findViewById(R.id.graph2);
@@ -103,6 +108,11 @@ public class RealtimeGraph extends Activity {
 		mTimer1 = new Runnable() {
 			@Override
 			public void run() {
+				exampleSeries1.resetData(
+						new float[] { 1f,2f,3f,4f,5f } ,
+				        new float[] { (float)getRandom(),(float)getRandom(),0.3f,(float)getRandom(),(float)getRandom() },
+				        5 );
+				/*
 				exampleSeries1.resetData(new GraphViewData[] {
 						new GraphViewData(1, getRandom())
 						, new GraphViewData(2, getRandom())
@@ -111,7 +121,8 @@ public class RealtimeGraph extends Activity {
 						, new GraphViewData(4, getRandom())
 						, new GraphViewData(5, getRandom())
 				});
-				mHandler.postDelayed(this, 300);
+				*/
+				mHandler.postDelayed(this, 2000);
 			}
 		};
 		mHandler.postDelayed(mTimer1, 300);
@@ -120,8 +131,8 @@ public class RealtimeGraph extends Activity {
 			@Override
 			public void run() {
 				graph2LastXValue += 1d;
-				exampleSeries2.appendData(new GraphViewData(graph2LastXValue, getRandom()), true);
-				mHandler.postDelayed(this, 1000);
+				exampleSeries2.appendData((float)graph2LastXValue, (float)getRandom(), true);
+				mHandler.postDelayed(this, 100);
 			}
 		};
 		mHandler.postDelayed(mTimer2, 1000);

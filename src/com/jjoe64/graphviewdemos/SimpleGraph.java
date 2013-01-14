@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 
 import com.jjoe64.graphview.BarGraphView;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
@@ -18,6 +17,9 @@ public class SimpleGraph extends Activity {
 		setContentView(R.layout.graphs);
 
 		// init example series data
+		GraphViewSeries exampleSeries = new GraphViewSeries(new float[] { 1f,2f,3f,4f,5f } ,
+				new float[] { 2.1f,1.2f,3.3f,1.4f,2.5f } );
+/*		
 		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
 				new GraphViewData(1, 2.0d)
 				, new GraphViewData(2, 1.5d)
@@ -26,7 +28,7 @@ public class SimpleGraph extends Activity {
 				, new GraphViewData(4, 1.0d)
 				, new GraphViewData(5, 3.0d)
 		});
-
+*/
 		// graph with dynamically genereated horizontal and vertical labels
 		GraphView graphView;
 		if (getIntent().getStringExtra("type").equals("bar")) {

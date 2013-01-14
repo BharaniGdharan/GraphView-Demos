@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphView.LegendAlign;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
@@ -23,32 +22,44 @@ public class AdvancedMultipleSeriesGraph extends Activity {
 		 */
 		// sin curve
 		int num = 150;
-		GraphViewData[] data = new GraphViewData[num];
+//		GraphViewData[] data = new GraphViewData[num];
+		float[] xdata = new float[num];
+		float[] ydata = new float[num];
 		double v=0;
 		for (int i=0; i<num; i++) {
 			v += 0.2;
-			data[i] = new GraphViewData(i, Math.sin(v));
+//			data[i] = new GraphViewData(i, Math.sin(v));
+			xdata[i] = i;
+			ydata[i] = (float)Math.sin(v);
 		}
-		GraphViewSeries seriesSin = new GraphViewSeries("Sinus curve", new GraphViewSeriesStyle(Color.rgb(200, 50, 00), 3), data);
+		GraphViewSeries seriesSin = new GraphViewSeries("Sinus curve", new GraphViewSeriesStyle(Color.rgb(200, 50, 00), 3), xdata,ydata);
 
 		// cos curve
-		data = new GraphViewData[num];
+//		data = new GraphViewData[num];
+		xdata = new float[num];
+		ydata = new float[num];
 		v=0;
 		for (int i=50; i<num-50; i++) {
 			v += 0.2;
-			data[i-50] = new GraphViewData(i, Math.cos(v));
+//			data[i-50] = new GraphViewData(i, Math.cos(v));
+			xdata[i] = i;
+			ydata[i] = (float)Math.sin(Math.random()*v);
 		}
-		GraphViewSeries seriesCos = new GraphViewSeries("Cosinus curve", new GraphViewSeriesStyle(Color.rgb(90, 250, 00), 3), data);
+		GraphViewSeries seriesCos = new GraphViewSeries("Cosinus curve", new GraphViewSeriesStyle(Color.rgb(90, 250, 00), 3), xdata,ydata);
 
 		// random curve
 		num = 1000;
-		data = new GraphViewData[num];
+//		data = new GraphViewData[num];
+		xdata = new float[num];
+		ydata = new float[num];
 		v=0;
 		for (int i=0; i<num; i++) {
 			v += 0.2;
-			data[i] = new GraphViewData(i, Math.sin(Math.random()*v));
-		}
-		GraphViewSeries seriesRnd = new GraphViewSeries("Random curve", null, data);
+	//		data[i] = new GraphViewData(i, Math.sin(Math.random()*v));
+			xdata[i] = i;
+			ydata[i] = (float)Math.sin(Math.random()*v);
+			}
+		GraphViewSeries seriesRnd = new GraphViewSeries("Random curve", null, xdata,ydata);
 
 		// graph with dynamically genereated horizontal and vertical labels
 		LineGraphView graphView;

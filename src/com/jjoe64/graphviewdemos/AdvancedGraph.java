@@ -6,7 +6,6 @@ import android.widget.LinearLayout;
 
 import com.jjoe64.graphview.BarGraphView;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
@@ -19,12 +18,16 @@ public class AdvancedGraph extends Activity {
 
 		// draw sin curve
 		int num = 150;
-		GraphViewData[] data = new GraphViewData[num];
+//		GraphViewData[] data = new GraphViewData[num];
+		float[] xdata = new float[num];
+		float[] ydata = new float[num];
 		double v=0;
 		for (int i=0; i<num; i++) {
 			v += 0.2;
-			data[i] = new GraphViewData(i, Math.sin(v));
-		}
+//			data[i] = new GraphViewData(i, Math.sin(v));
+			xdata[i] = i;
+			ydata[i] = (float)Math.sin(v);
+		} // for i
 		// graph with dynamically genereated horizontal and vertical labels
 		GraphView graphView;
 		if (getIntent().getStringExtra("type").equals("bar")) {
@@ -39,7 +42,8 @@ public class AdvancedGraph extends Activity {
 			);
 		}
 		// add data
-		graphView.addSeries(new GraphViewSeries(data));
+//		graphView.addSeries(new GraphViewSeries(data));
+		graphView.addSeries(new GraphViewSeries(xdata,ydata));
 		// set view port, start=2, size=40
 		graphView.setViewPort(2, 40);
 		graphView.setScrollable(true);
@@ -48,11 +52,15 @@ public class AdvancedGraph extends Activity {
 
 		// draw random curve
 		num = 1000;
-		data = new GraphViewData[num];
+//		data = new GraphViewData[num];
+		xdata = new float[num];
+		ydata = new float[num];
 		v=0;
 		for (int i=0; i<num; i++) {
 			v += 0.2;
-			data[i] = new GraphViewData(i, Math.sin(Math.random()*v));
+//			data[i] = new GraphViewData(i, Math.sin(Math.random()*v));
+			xdata[i] = i;
+			ydata[i] = (float)Math.sin(Math.random()*v);
 		}
 		// graph with dynamically genereated horizontal and vertical labels
 		if (getIntent().getStringExtra("type").equals("bar")) {
@@ -68,7 +76,8 @@ public class AdvancedGraph extends Activity {
 			((LineGraphView) graphView).setDrawBackground(true);
 		}
 		// add data
-		graphView.addSeries(new GraphViewSeries(data));
+//		graphView.addSeries(new GraphViewSeries(data));
+		graphView.addSeries(new GraphViewSeries(xdata,ydata));
 		// set view port, start=2, size=10
 		graphView.setViewPort(2, 10);
 		graphView.setScalable(true);
