@@ -2,6 +2,27 @@ Chart and Graph Library for Android
 ====================================
 
 <h2>What is GraphView</h2>
+
+* Comment by OttoES
+I have done some modifications to the excelent original code to increase the performance of realtime graps as well as very large data sets.
+The following change was made specifically for fast updating of realtime graphs with high sampling rates (>10Hz).
+Graphs with static data are not going to benifit much from these changes unless
+you have a very large data set (10 000's of points)
+
+Data used to be stored as x,y coordinates in an object and an array of objects was used to store all data points. It was changed to store data in float arrays.
+Float arrays have the following advantages compared to the previous implementation:
+* uses significantly less storage space
+* should be faster (not sure how much without benchmarking)
+* less garbage collection to be done
+* less memory fragmentation
+* faster to add data points to the existing data
+The new structure also changes the way the data storage is allocated for appending data to the existing data.
+The data arrays will now be 'oversized' when single points are added/appended.
+The number of values to display in the array will therefore differ from the size.
+The result is that there might already be space in the array when new values are added, the new value can be added directly without copying all the elements in the array to a newly allocated array of the new size. If there is no space a new array object is created with extra space for future use.
+
+* End Comment
+
 GraphView is a library for Android to programmatically create flexible and nice-looking diagramms. It is easy to understand, to integrate and to customize it.
 At the moment there are two different types:
 <ul>
