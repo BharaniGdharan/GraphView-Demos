@@ -2,13 +2,18 @@ Chart and Graph Library for Android
 ====================================
 
 <h3>Comment by OttoES</h3>
-I have done some modifications to the excelent original code to increase the performance of realtime graphs as well as very large data sets.
+The original code for this project was written mainly by Jonas Gehring. This code is widely used because it it has the right
+balance between functionality, flexability, size without being overly complex. This is an excelent piece of work, thanks Jonas.
+
+<h4>15 January 2013 </h4>
+I have done some modifications to the original code to increase the performance of realtime graphs as well as very large data sets.
 The following change was made specifically for fast updating of realtime graphs with high sampling rates (10Hz or faster).
 Graphs with static data will only benifit much from these changes if you have a very large data set (10 000's of points)
 
-Data used to be stored as x,y coordinates in an object and an array of objects was used to store all data points. It was changed to store data in float arrays.
+Data used to be stored as x,y coordinates in an object and an array of objects was used to store all data points. 
+The data structure was changed to store data in float arrays.
 Float arrays have the following advantages compared to the previous implementation:
-* uses significantly less storage space
+* uses significantly less storage space (reduction of about 3:1)
 * should be faster (not sure how much without benchmarking)
 * less garbage collection to be done
 * less memory fragmentation
@@ -20,7 +25,21 @@ The number of values to display in the array will therefore differ from the size
 The result is that there might already be space in the array when new values are added, the new value can be added directly without copying all the elements in the array to a newly allocated array of the new size. If there is no space a new array object is created with extra space for future use.
 Unfortunately these changes are not compatable with the previous implementation. Maybe I can add a convertion constructor?
 
-<h2>What is GraphView</h2>
+<h4>20 January 2013 </h4>
+
+Made more changes to speedup the graphs with large data sets.
+* Derived the graphs from View and not from LinearLayout. Had to change all the views in the class to be part of a singel view as well.
+* Improved performance for large datasets by only drawing the graphs if the data are within the current viewport. (This is a huge speedup if the viewport is small compared to the dataset)
+* Changed the scroll/pan and zoom functions. The original functions did not work correcly on my 2 test tablets if the graphs were embedded in a scroller (most of the examples if not all are embedded within a scroller)
+
+<h4>8 February 2013 </h4>
+Changed the way that the scroll, fling and zoom is implemented.
+The touch have 3 different functions depending on the action:
+* can be a page scroll if the movement is vertical > 50 px
+* if movement horizontal - scroll/pan graph
+* pinch will zoom the horizontal axis
+
+<h2>Original text: What is GraphView</h2>
 
 GraphView is a library for Android to programmatically create flexible and nice-looking diagramms. It is easy to understand, to integrate and to customize it.
 At the moment there are two different types:
